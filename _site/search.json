@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Donnovan Young II",
+    "section": "",
+    "text": "Getting Started with R using a real dataset\n\n\n\n\n\n\n\nData Analysis\n\n\n\n\n\n\n\n\n\n\n\nDec 2, 2024\n\n\nDonnovan Young II\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Donnovan Young II",
+    "section": "",
+    "text": "Donnovan Young II has a multiple experiences across the cement and financial industries. At the moment, he is employed at Texas Capital Bank in Dallas, TX as a Senior Financial Analyst. Donnovan received his Bachelors of Science in Management and Finance from Roosevelt University. Currently, he is pursuing his Masters of Science in Advanced Data Analytics at the University of North Texas and will be finished in summer of 2024.\nPhone: 224-678-5847\nEmail: donnovan.young@gmail.com"
+  },
+  {
+    "objectID": "posts/Getting Started in R/index.html",
+    "href": "posts/Getting Started in R/index.html",
+    "title": "Getting Started with R using a real dataset",
+    "section": "",
+    "text": "The first thing needed is to load in some of the packages that are going to be needed. Then we need to load into the dataset by using the read.csv command.\nIts important to know what the variables are in the dataset so the names function allows you to see each one.\n\n\n [1] \"State\"                       \"OwnComputer\"                \n [3] \"CommutePublicTransport\"      \"TotalPopulation\"            \n [5] \"MedianAge\"                   \"WithCashAssistanceIncome\"   \n [7] \"MeanSocialSecurityIcnome\"    \"SupplementarySecurityIncome\"\n [9] \"WhiteOnly\"                   \"Latinos\"                    \n[11] \"Asians\"                      \"AfricanAmerican\"            \n[13] \"Income100K.150K\"             \"Income75K.100K\"             \n[15] \"Income50K.75K\"               \"Income35K.50K\"              \n[17] \"Income25K.35K\"               \"PovertyRate\"                \n\n\nIn this short example, I wanted to use a Random Forest model to help determine what the variable of most importance is to predict the Total population.\nFirst we split the data set into two sections, training and test. In this example we only use the training data set.\nNow it is time to run the random forest model, as seen below the target is “total population” and we are using all of the variables within the data set.\nOnce the model is ran, we want to strip out the feature of importance from the random forest model.\nMore useful variables achieve higher increases in node purities, In this case the highest number in importance is the CommutePublicTransport variable\n\ndf &lt;- mydata\n\n# Set the seed for reproducibility\nset.seed(123)\n\n# Split the data into training and testing sets\ntrainIndex &lt;- createDataPartition(df$TotalPopulation, p = 0.8, list = FALSE)\ntrain_data &lt;- df[trainIndex, ]\ntest_data &lt;- df[-trainIndex, ]\n\n# Train a random forest model\nrf_model &lt;- randomForest(TotalPopulation ~ ., data = train_data)\n\n# Extract feature importance\nimportance &lt;- importance(rf_model)\n\n# Print feature importance\nprint(importance)\n\n                            IncNodePurity\nState                        7.148731e+13\nOwnComputer                  7.034472e+13\nCommutePublicTransport       7.001044e+14\nMedianAge                    1.035105e+14\nWithCashAssistanceIncome     1.069582e+14\nMeanSocialSecurityIcnome     7.206757e+13\nSupplementarySecurityIncome  6.967479e+13\nWhiteOnly                    1.767187e+14\nLatinos                      1.188293e+14\nAsians                       2.111893e+14\nAfricanAmerican              9.272705e+13\nIncome100K.150K              4.380902e+13\nIncome75K.100K               1.016980e+14\nIncome50K.75K                6.307235e+13\nIncome35K.50K                2.658070e+13\nIncome25K.35K                3.930590e+13\nPovertyRate                  1.035979e+14\n\n# Visualize feature importance\nvarImpPlot(rf_model)\n\n\n\n\nI was very curious to see what the correlation between the lowest and the highest values in the IncNodePurity\nI created a scatter plot and ran the correlation amount for both Commute Public Transport and Income 35K.50K to show the relationship to Total Population.\nYou can clearly see that Commute Public Transport had the higher correlation to Total Population!\n\nggplot(mydata, aes(x = TotalPopulation, y = CommutePublicTransport)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"red\") +\n  labs(title = \"Scatter Plot with Regression Line\",\n       x = \"Total Population\",\n       y = \"Commute Public Transport\") +\n  theme_minimal()\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\nggplot(mydata, aes(x = TotalPopulation, y = Income35K.50K)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"green\") +\n  labs(title = \"Scatter Plot with Regression Line\",\n       x = \"Total Population\",\n       y = \"Income35K.50K\") +\n  theme_minimal()\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\ncorrelation1 &lt;- cor(mydata$TotalPopulation, mydata$Income35K.50K)\n\ncorrelation2 &lt;- cor(mydata$TotalPopulation, mydata$CommutePublicTransport)\n\ncat(\" Total Population and Income35K.50K\", correlation1, \"\\n\")\n\n Total Population and Income35K.50K -0.1008377 \n\ncat(\" Total Population and CommutePublicTransport\", correlation2)\n\n Total Population and CommutePublicTransport 0.5606753"
+  }
+]

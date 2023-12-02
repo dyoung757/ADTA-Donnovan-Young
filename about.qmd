@@ -1,0 +1,19 @@
+---
+title: "Donnovan Young II"
+image: Donnovan Young Picture.jpg
+about:
+  template: jolla
+  links:
+      - icon: github
+        href: https://github.com/dyoung757
+      - icon: linkedin
+        href: https://https://www.linkedin.com/in/donnovan-young-ii/
+      - icon: pdfjs
+        href: https://1drv.ms/w/s!AqV6o-t9_OJFlyAKy_QGooBjsz4m?e=xOwcRa
+---
+
+Donnovan Young II has a multiple experiences across the cement and financial industries. At the moment, he is employed at Texas Capital Bank in Dallas, TX as a Senior Financial Analyst. Donnovan received his Bachelors of Science in Management and Finance from Roosevelt University. Currently, he is pursuing his Masters of Science in Advanced Data Analytics at the University of North Texas and will be finished in summer of 2024.
+
+Phone: 224-678-5847
+
+Email: donnovan.young\@gmail.com
