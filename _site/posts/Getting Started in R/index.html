@@ -180,112 +180,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>The first thing needed is to load in some of the packages that are going to be needed. Then we need to load into the dataset by using the read.csv command.</p>
+<p>The first thing needed is to load in some of the packages that are going to be needed. Then we need to load into the dataset by using dataset from the caret package</p>
 <p>Its important to know what the variables are in the dataset so the names function allows you to see each one.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "State"                       "OwnComputer"                
- [3] "CommutePublicTransport"      "TotalPopulation"            
- [5] "MedianAge"                   "WithCashAssistanceIncome"   
- [7] "MeanSocialSecurityIcnome"    "SupplementarySecurityIncome"
- [9] "WhiteOnly"                   "Latinos"                    
-[11] "Asians"                      "AfricanAmerican"            
-[13] "Income100K.150K"             "Income75K.100K"             
-[15] "Income50K.75K"               "Income35K.50K"              
-[17] "Income25K.35K"               "PovertyRate"                </code></pre>
-</div>
-</div>
-<p>In this short example, I wanted to use a Random Forest model to help determine what the variable of most importance is to predict the Total population.</p>
+<p>In this short example, I wanted to use a Random Forest model to help determine what the variable of most importance is to predict the Price.</p>
 <p>First we split the data set into two sections, training and test. In this example we only use the training data set.</p>
-<p>Now it is time to run the random forest model, as seen below the target is “total population” and we are using all of the variables within the data set.</p>
+<p>Now it is time to run the random forest model, as seen below the target is “Price” and we are using all of the variables within the data set.</p>
 <p>Once the model is ran, we want to strip out the feature of importance from the random forest model.</p>
-<p>More useful variables achieve higher increases in node purities, In this case the highest number in importance is the CommutePublicTransport variable</p>
+<p>More useful variables achieve higher increases in node purities, In this case the highest number in importance is the Cylinder variable</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> mydata</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>TotalPopulation, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> df[trainIndex, ]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> df[<span class="sc">-</span>trainIndex, ]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Train a random forest model</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(TotalPopulation <span class="sc">~</span> ., <span class="at">data =</span> train_data)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature importance</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">importance</span>(rf_model)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print feature importance</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(importance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> dfdata</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2367</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>response_variable <span class="ot">&lt;-</span> <span class="st">"Price"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> cars[[response_variable]], <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> cars[trainIndex, ]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> cars[<span class="sc">-</span>trainIndex, ]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Train a random forest model</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Price<span class="sc">~</span> ., <span class="at">data =</span> train_data)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature importance</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">importance</span>(rf_model)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print feature importance</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(importance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                            IncNodePurity
-State                        7.148731e+13
-OwnComputer                  7.034472e+13
-CommutePublicTransport       7.001044e+14
-MedianAge                    1.035105e+14
-WithCashAssistanceIncome     1.069582e+14
-MeanSocialSecurityIcnome     7.206757e+13
-SupplementarySecurityIncome  6.967479e+13
-WhiteOnly                    1.767187e+14
-Latinos                      1.188293e+14
-Asians                       2.111893e+14
-AfricanAmerican              9.272705e+13
-Income100K.150K              4.380902e+13
-Income75K.100K               1.016980e+14
-Income50K.75K                6.307235e+13
-Income35K.50K                2.658070e+13
-Income25K.35K                3.930590e+13
-PovertyRate                  1.035979e+14</code></pre>
+<pre><code>            IncNodePurity
+Mileage        1862506923
+Cylinder      15725523426
+Doors           845025737
+Cruise         2659354675
+Sound           286488785
+Leather         340984966
+Buick           330324851
+Cadillac      11727645871
+Chevy          2392027827
+Pontiac        1118985162
+Saab           5716123437
+Saturn          628570049
+convertible    5377614962
+coupe           441701915
+hatchback       153284263
+sedan           703391627
+wagon           123401261</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize feature importance</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize feature importance</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>I was very curious to see what the correlation between the lowest and the highest values in the IncNodePurity</p>
-<p>I created a scatter plot and ran the correlation amount for both Commute Public Transport and Income 35K.50K to show the relationship to Total Population.</p>
-<p>You can clearly see that Commute Public Transport had the higher correlation to Total Population!</p>
+<p>I created a scatter plot and ran the correlation amount for both Cylinder and wagon to show the relationship to Price.</p>
+<p>You can clearly see that Cylinder had the higher correlation to Price!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x =</span> TotalPopulation, <span class="at">y =</span> CommutePublicTransport)) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot with Regression Line"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Population"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Commute Public Transport"</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x =</span> TotalPopulation, <span class="at">y =</span> Income35K<span class="fl">.50</span>K)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot with Regression Line"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Population"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Income35K.50K"</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>correlation1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(mydata<span class="sc">$</span>TotalPopulation, mydata<span class="sc">$</span>Income35K<span class="fl">.50</span>K)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>correlation2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(mydata<span class="sc">$</span>TotalPopulation, mydata<span class="sc">$</span>CommutePublicTransport)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">" Total Population and Income35K.50K"</span>, correlation1, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>correlation1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(cars<span class="sc">$</span>Price, cars<span class="sc">$</span>Cylinder)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>correlation2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(cars<span class="sc">$</span>Price, cars<span class="sc">$</span>wagon)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">" Price and Cylinder"</span>, correlation1, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Total Population and Income35K.50K -0.1008377 </code></pre>
+<pre><code> Price and Cylinder 0.5690861 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">" Total Population and CommutePublicTransport"</span>, correlation2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">" Price and wagon"</span>, correlation2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Total Population and CommutePublicTransport 0.5606753</code></pre>
+<pre><code> Price and wagon 0.04513386</code></pre>
 </div>
 </div>
 

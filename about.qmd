@@ -7,7 +7,7 @@ about:
       - icon: github
         href: https://github.com/dyoung757
       - icon: linkedin
-        href: https://https://www.linkedin.com/in/donnovan-young-ii/
+        href: https://www.linkedin.com/in/donnovan-young-ii/
       - icon: pdfjs
         href: https://1drv.ms/w/s!AqV6o-t9_OJFlyAKy_QGooBjsz4m?e=xOwcRa
 ---

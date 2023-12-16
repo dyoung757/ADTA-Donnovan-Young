@@ -5,7 +5,7 @@ date: "2024-12-02"
 categories: [Data Analysis]
 ---
 
-The first thing needed is to load in some of the packages that are going to be needed. Then we need to load into the dataset by using the read.csv command.
+The first thing needed is to load in some of the packages that are going to be needed. Then we need to load into the dataset by using dataset from the  caret package
 
 Its important to know what the variables are in the dataset so the names function allows you to see each one.
 
@@ -20,34 +20,36 @@ library(randomForest)
 
 knitr::opts_chunk$set(echo = TRUE)
 
-mydata<-read.csv("C:/Users/Donnie Young/OneDrive/ADTA Donnovan Young/Data_RLab2.csv", header= TRUE)
-names(mydata)
+
+dfdata <- data(cars)
 ```
 
-In this short example, I wanted to use a Random Forest model to help determine what the variable of most importance is to predict the Total population.
+In this short example, I wanted to use a Random Forest model to help determine what the variable of most importance is to predict the Price.
 
 First we split the data set into two sections, training and test. In this example we only use the training data set.
 
-Now it is time to run the random forest model, as seen below the target is "total population" and we are using all of the variables within the data set.
+Now it is time to run the random forest model, as seen below the target is “Price” and we are using all of the variables within the data set.
 
 Once the model is ran, we want to strip out the feature of importance from the random forest model.
 
-More useful variables achieve higher increases in node purities, In this case the highest number in importance is the CommutePublicTransport variable
+More useful variables achieve higher increases in node purities, In this case the highest number in importance is the Cylinder variable
 
 ```{r, echo=TRUE}
 
-df <- mydata
+df <- dfdata
 
 # Set the seed for reproducibility
-set.seed(123)
+set.seed(2367)
+
 
 # Split the data into training and testing sets
-trainIndex <- createDataPartition(df$TotalPopulation, p = 0.8, list = FALSE)
-train_data <- df[trainIndex, ]
-test_data <- df[-trainIndex, ]
+response_variable <- "Price"
+trainIndex <- createDataPartition(y = cars[[response_variable]], p = 0.7, list = FALSE)
+train_data <- cars[trainIndex, ]
+test_data <- cars[-trainIndex, ]
 
 # Train a random forest model
-rf_model <- randomForest(TotalPopulation ~ ., data = train_data)
+rf_model <- randomForest(Price~ ., data = train_data)
 
 # Extract feature importance
 importance <- importance(rf_model)
@@ -63,35 +65,20 @@ varImpPlot(rf_model)
 
 
 ```
-
 I was very curious to see what the correlation between the lowest and the highest values in the IncNodePurity
 
-I created a scatter plot and ran the correlation amount for both Commute Public Transport and Income 35K.50K to show the relationship to Total Population.
+I created a scatter plot and ran the correlation amount for both Cylinder and wagon to show the relationship to Price.
 
-You can clearly see that Commute Public Transport had the higher correlation to Total Population!
+You can clearly see that Cylinder had the higher correlation to Price!
+
 
 ```{r, echo=TRUE}
 
-ggplot(mydata, aes(x = TotalPopulation, y = CommutePublicTransport)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = "red") +
-  labs(title = "Scatter Plot with Regression Line",
-       x = "Total Population",
-       y = "Commute Public Transport") +
-  theme_minimal()
+correlation1 <- cor(cars$Price, cars$Cylinder)
 
-ggplot(mydata, aes(x = TotalPopulation, y = Income35K.50K)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = "green") +
-  labs(title = "Scatter Plot with Regression Line",
-       x = "Total Population",
-       y = "Income35K.50K") +
-  theme_minimal()
-correlation1 <- cor(mydata$TotalPopulation, mydata$Income35K.50K)
+correlation2 <- cor(cars$Price, cars$wagon)
 
-correlation2 <- cor(mydata$TotalPopulation, mydata$CommutePublicTransport)
-
-cat(" Total Population and Income35K.50K", correlation1, "\n")
-cat(" Total Population and CommutePublicTransport", correlation2)
+cat(" Price and Cylinder", correlation1, "\n")
+cat(" Price and wagon", correlation2)
 
 ```
